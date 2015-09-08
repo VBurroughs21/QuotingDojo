@@ -6,10 +6,6 @@
 	$errors = array();
 
 
-	function insertData() {
-
-	}
-
 	if (isset($_POST['add_quote']) && $_POST['add_quote'] != null) {
 		if (isset($_POST['name']) && $_POST['name'] != null) {
 			$_SESSION['name'] = $_POST['name'];
@@ -26,11 +22,13 @@
 		 	$_SESSION['errors'] = $errors;
 		 	header('Location: index.php');
 		} else {
-
-			$query = "INSERT INTO users (name, created_at) VALUES('{$_SESSION['name']}', NOW());";			
-			$query = "INSERT INTO quotes (quote, created_at, user_id) VALUES('{$_SESSION['quote']}', NOW(), (SELECT id FROM users WHERE name='123');";
+			$query = "INSERT INTO users (name, quote, created_at) 
+					VALUES('{$_POST['name']}', '{$_POST['quote']}', NOW())";
+			$insertQuote = run_mysql_query($query);
 			header('Location: main.php');
 		}
+
+		
 	} 
 
 	if (isset($_POST['skip'])) {
